@@ -1,0 +1,43 @@
+{
+  "name": "io.node.status",
+  "version": "1.0.1",
+  "description": "node status",
+  "main": "server.js",
+  "author": "contact@mle",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.x"
+  },
+  "scripts": {
+    "_clean": "rm -rf .gen .logs .nyc_output",
+    "_docker-restart": "docker compose down && docker compose up -d",
+    "bump": "npm version patch --no-git-tag-version",
+    "test": "npm run test-mocha-unit",
+    "start": "npm run start-node",
+    "start-in-docker": "node server.js",
+    "start-node": "node server.js",
+    "test-mocha-unit": "env NODE_ENV=test nyc --reporter=text mocha \"./app/**/*.spec.js\" --exit",
+    "test-mocha-integration": "env NODE_ENV=test nyc --reporter=text mocha \"./specs/**/*.spec.js\" --exit",
+    "test-mocha-all": "npm run test-mocha-unit && npm run test-mocha-integration",
+    "update": "git reset --hard HEAD && git pull && npm i"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mle-tools-node": "^1.2.6",
+    "morgan": "^1.9.1",
+    "npm-run": "^5.0.1",
+    "server-timing": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
+    "chai-spies": "^1.0.0",
+    "eslint": "^7.6.0",
+    "mocha": "^10.2.0",
+    "nyc": "^14.1.1",
+    "supertest": "^3.4.2"
+  }
+}
