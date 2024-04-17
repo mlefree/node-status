@@ -1,18 +1,18 @@
 const path = require('path');
 const config = require('../config');
-const { logger } = require('../factories/logger');
+const {logger} = require('../factories/logger');
 const AbstractController = require('./abstract');
 const axios = require("axios");
 const {OSMetrics} = require("mle-tools-node");
 
 class AdminController extends AbstractController {
 
-  constructor () {
+  constructor() {
     super();
     throw 'not used : used as static';
   }
 
-  static async apiStatus (req, res) {
+  static async apiStatus(req, res) {
     try {
       const status = await AdminController.BuildSummarizedStatus();
       if (status.ok) {
@@ -28,7 +28,7 @@ class AdminController extends AbstractController {
     return res.status(500).send();
   }
 
-  static async update (req, res) {
+  static async update(req, res) {
     logger.warn('#UPDATE app with "npm run update"...');
     // copy & paste from "node-pull" project
     const npmRun = require('npm-run');
@@ -51,7 +51,7 @@ class AdminController extends AbstractController {
     return res.status(200).send('update from version: ' + version + ' to HEAD ...');
   }
 
-  static async BuildSummarizedStatus (req, res) {
+  static async BuildSummarizedStatus(req, res) {
 
     let ok = true;
     const os = {};
@@ -59,9 +59,9 @@ class AdminController extends AbstractController {
       const metrics = await OSMetrics.getMetrics();
       const hostname = metrics.name;
       os[hostname] = {
-      cpu : metrics.cpuPercent,
-      mem : metrics.memoryPercent,
-      disk : metrics.diskPercent,
+        cpu: metrics.cpuPercent,
+        mem: metrics.memory2Percent,
+        disk: metrics.diskPercent,
       }
     } catch (e) {
       logger.error(e);
@@ -77,7 +77,7 @@ class AdminController extends AbstractController {
   }
 
 
-  static GetUrlVersion (config) {
+  static GetUrlVersion(config) {
     let urlVersion = '';
     if (config.deploy.version.indexOf('1.') === 0) {
       urlVersion = 'v1';
