@@ -1,18 +1,18 @@
 const path = require('path');
 const config = require('../config');
-const {logger} = require('../factories/logger');
+const { logger } = require('../factories/logger');
 const AbstractController = require('./abstract');
-const axios = require("axios");
-const {OSMetrics} = require("mle-tools-node");
+const axios = require('axios');
+const { OSMetrics } = require('mle-tools-node');
 
 class AdminController extends AbstractController {
 
-  constructor() {
+  constructor () {
     super();
     throw 'not used : used as static';
   }
 
-  static async apiStatus(req, res) {
+  static async apiStatus (req, res) {
     try {
       const status = await AdminController.BuildSummarizedStatus();
       if (status.ok) {
@@ -28,30 +28,19 @@ class AdminController extends AbstractController {
     return res.status(500).send();
   }
 
-  static async update(req, res) {
+  static async update (req, res) {
     logger.warn('#UPDATE app with "npm run update"...');
-    // copy & paste from "node-pull" project
     const npmRun = require('npm-run');
     const version = require(path.resolve(__dirname, '../../', 'package.json')).version;
     npmRun.exec('npm run update', {}, async function (err, stdout, stderr) {
       logger.warn('#UPDATE update: ', err, stdout, stderr);
-      const workersUris = Tools._getAllWorkersUriNodes(config, '/update');
-      for (const [index, uri] of workersUris.entries()) {
-        try {
-          logger.info('workerUpdateUri', uri);
-          await axios.post(uri);
-        } catch (e) {
-          logger.error('worker update issue:', e);
-        }
-      }
-
       logger.warn('#UPDATE now, shutdown...');
       process.exit(0);
     });
     return res.status(200).send('update from version: ' + version + ' to HEAD ...');
   }
 
-  static async BuildSummarizedStatus(req, res) {
+  static async BuildSummarizedStatus (req, res) {
 
     let ok = true;
     const os = {};
@@ -62,10 +51,10 @@ class AdminController extends AbstractController {
         cpu: metrics.cpuPercent,
         mem: metrics.memory2Percent,
         disk: metrics.diskPercent,
-      }
+      };
     } catch (e) {
       logger.error(e);
-      ok = false
+      ok = false;
     }
 
     return {
@@ -77,7 +66,7 @@ class AdminController extends AbstractController {
   }
 
 
-  static GetUrlVersion(config) {
+  static GetUrlVersion (config) {
     let urlVersion = '';
     if (config.deploy.version.indexOf('1.') === 0) {
       urlVersion = 'v1';
@@ -92,6 +81,3 @@ class AdminController extends AbstractController {
 }
 
 module.exports = AdminController;
-
-
-

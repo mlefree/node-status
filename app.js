@@ -2,11 +2,11 @@ console.log(new Date(), '### App is starting.');
 require('dotenv').config();
 
 const config = require('./app/config');
-const {logger} = require('./app/factories/logger');
+const { logger } = require('./app/factories/logger');
 
 logger.info('### App launched');
 
-const server = require('./app/factories/express');
+const app = require('./app/factories/express');
 
 const listen = () => {
   if (config.deploy.isInTestMode) {
@@ -14,7 +14,7 @@ const listen = () => {
     return;
   }
 
-  server.listen(config.deploy.port);
+  app.listen(config.deploy.port);
   logger.info('### App started on port', config.deploy.port);
 };
 
@@ -25,7 +25,7 @@ const startedApp = (async () => {
   } catch (err) {
     logger.error('App Launching Issue : ', err);
   }
-  return server;
+  return app;
 })();
 
 module.exports = startedApp;

@@ -42,9 +42,6 @@ module.exports = (function () {
     const routerV3 = require('../config/routes/routes.v3')(eRouter);
     _app.use('/v2', routerV2);
     _app.use('/v3', routerV3);
-  } else if (config.deploy.version.indexOf('test') === 0) {
-    const testRouter = require('./config/routes.test');
-    _app.use('/test', testRouter);
   }
 
   _app.use(function (req, res, next) {

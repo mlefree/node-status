@@ -1,4 +1,4 @@
-const $app = require('../server');
+const $app = require('../app');
 const request = require('supertest');
 const { logger } = require('../app/factories/logger');
 

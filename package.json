@@ -1,8 +1,8 @@
 {
   "name": "io.node.status",
-  "version": "1.0.2",
+  "version": "1.1.1",
   "description": "node status",
-  "main": "server.js",
+  "main": "app.js",
   "author": "contact@mle",
   "license": "MIT",
   "engines": {
@@ -14,8 +14,8 @@
     "bump": "npm version patch --no-git-tag-version",
     "test": "npm run test-mocha-unit",
     "start": "npm run start-node",
-    "start-in-docker": "node server.js",
-    "start-node": "node server.js",
+    "start-in-docker": "node app.js",
+    "start-node": "node app.js",
     "test-mocha-unit": "env NODE_ENV=test nyc --reporter=text mocha \"./app/**/*.spec.js\" --exit",
     "test-mocha-integration": "env NODE_ENV=test nyc --reporter=text mocha \"./specs/**/*.spec.js\" --exit",
     "test-mocha-all": "npm run test-mocha-unit && npm run test-mocha-integration",
@@ -25,7 +25,7 @@
     "compression": "^1.7.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mle-tools-node": "^1.3.3",
+    "mle-tools-node": "^1.6.10",
     "morgan": "^1.9.1",
     "npm-run": "^5.0.1",
     "server-timing": "^3.3.3"
